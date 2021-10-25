@@ -16,15 +16,18 @@ repositories {
     mavenCentral()
 }
 
+val postgresqlDriverVersion by extra { "42.3.0" }
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.postgresql:postgresql:$postgresqlDriverVersion")
 
-    runtimeOnly("com.h2database:h2")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api")
@@ -42,4 +45,9 @@ tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
         jvmTarget = "15"
     }
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    sourceCompatibility = "15"
+    targetCompatibility = "15"
 }
