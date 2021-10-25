@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1" author="m.kolbasov">
+        <createTable tableName="parking">
+            <column name="p_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="p_uid" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="p_name" type="varchar(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="p_created" type="datetime" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="p_updated" type="datetime" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="parking" indexName="parking_uid_i">
+            <column name="p_uid"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

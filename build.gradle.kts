@@ -7,6 +7,7 @@ plugins {
     id("org.springframework.boot") version "2.5.6"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("plugin.spring") version "1.5.31"
+    id("org.liquibase.gradle") version "2.0.4"
 }
 
 group = "swedbank.mkolbasov"
@@ -28,6 +29,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.postgresql:postgresql:$postgresqlDriverVersion")
 
+    runtimeOnly("org.liquibase:liquibase-core")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api")
