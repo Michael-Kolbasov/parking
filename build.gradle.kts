@@ -18,19 +18,24 @@ repositories {
 }
 
 val postgresqlDriverVersion by extra { "42.3.0" }
+val apacheCommonsVersion by extra { "3.12.0" }
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.postgresql:postgresql:$postgresqlDriverVersion")
+    implementation("org.apache.commons:commons-lang3:$apacheCommonsVersion")
 
     runtimeOnly("org.liquibase:liquibase-core")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
+
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

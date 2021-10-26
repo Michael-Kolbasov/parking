@@ -1,3 +1,12 @@
+parking:
+  floor:
+    height:
+      min: 2.5
+      max: 5.0
+    weight:
+      min: 100.0
+      max: 500.0
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -19,6 +28,17 @@ spring:
       hibernate.default_schema: ${DATABASE_SCHEMA:public}
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
+
+server:
+  port: ${PORT:8080}
+  tomcat:
+    max-swallow-size: 5MB
+    connection-timeout: 5s
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+    context-path: /api
 
 management:
   endpoint:
