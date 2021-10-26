@@ -1,14 +1,14 @@
 package com.swedbank.parking.parking.config
 
 import com.sun.istack.NotNull
-import com.swedbank.parking.parking.config.ParkingProperties.Companion.parkingPrefix
+import com.swedbank.parking.common.config.Prefix
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.validation.annotation.Validated
 import java.math.BigDecimal
 import javax.validation.constraints.Min
 
-@ConfigurationProperties(prefix = parkingPrefix)
+@ConfigurationProperties(prefix = Prefix.parking)
 @ConstructorBinding
 @Validated
 data class ParkingProperties(
@@ -34,9 +34,5 @@ data class ParkingProperties(
             @field:[NotNull Min(0)]
             val max: BigDecimal? = null,
         )
-    }
-
-    companion object {
-        const val parkingPrefix = "parking"
     }
 }
