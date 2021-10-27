@@ -21,7 +21,7 @@ class FloorOccupancyPricingService(
         val occupiedLotsAmount = floor.lots.count { it.occupiedBy != null }
         val totalLotsAmount = floor.lots.size
         val floorOccupancyPercent = (occupiedLotsAmount / totalLotsAmount).toBigDecimal()
-        val avgPrice = parkingProperties.ticket.price.avg!!
+        val avgPrice = parkingProperties.ticket.price.base!!
         val price = avgPrice + (avgPrice * floorOccupancyPercent)
         return price.round(roundToHalfDown)
     }

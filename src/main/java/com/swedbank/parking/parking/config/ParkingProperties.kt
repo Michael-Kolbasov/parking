@@ -45,7 +45,7 @@ data class ParkingProperties(
     ) {
         data class Price(
             @field:[NotNull Min(0)]
-            val avg: BigDecimal? = null,
+            val base: BigDecimal? = null,
             @Validated
             val strategy: Strategy,
         ) {
