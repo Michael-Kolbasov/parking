@@ -30,12 +30,14 @@ class ParkingTicketAssignService(
                 message = "Parking ${parking.uid} has no available parking lots.",
             )
         }
-        val pickedLot = availableLots.first().apply {
-            occupiedBy = vehicle
-            updated = Instant.now()
-        }.also {
-            parkingLotService.saveOrUpdate(it)
-        }
+        // todo add strategy with specific rules to pick a lot, picking any for now
+        val pickedLot = availableLots.first()
+            .apply {
+                occupiedBy = vehicle
+                updated = Instant.now()
+            }.also {
+                parkingLotService.saveOrUpdate(it)
+            }
         return parkingTicketRepository.saveAndFlush(
             parkingTicketMapper.getTicket(
                 lot = pickedLot,

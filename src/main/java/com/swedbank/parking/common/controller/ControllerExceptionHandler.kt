@@ -43,7 +43,7 @@ class ControllerExceptionHandler(
         return ExceptionResponse(
             ex.errorInfo.getCode(),
             getMessage(ex),
-            ZonedDateTime.now(ParkingApplication.defaultTimeZone),
+            ZonedDateTime.now(ParkingApplication.utc),
             ex.validationErrors.map { validationErrorMapper.getValidationErrorDto(it) },
         )
     }
