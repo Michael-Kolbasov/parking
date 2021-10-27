@@ -1,7 +1,6 @@
 package com.swedbank.parking.parking.service
 
 import com.swedbank.parking.common.exception.ParkingException
-import com.swedbank.parking.parking.dao.ParkingTicketRepository
 import com.swedbank.parking.parking.exception.ParkingLotError
 import com.swedbank.parking.parking.mapper.ParkingTicketMapper
 import com.swedbank.parking.parking.model.Parking
@@ -14,7 +13,7 @@ import java.time.Instant
 
 @Service
 class ParkingTicketAssignService(
-    private val parkingTicketRepository: ParkingTicketRepository,
+    private val parkingTicketService: ParkingTicketService,
     private val parkingTicketMapper: ParkingTicketMapper,
     private val parkingLotService: ParkingLotService,
 ) {
@@ -38,7 +37,7 @@ class ParkingTicketAssignService(
             }.also {
                 parkingLotService.saveOrUpdate(it)
             }
-        return parkingTicketRepository.saveAndFlush(
+        return parkingTicketService.saveOrUpdate(
             parkingTicketMapper.getTicket(
                 lot = pickedLot,
             )

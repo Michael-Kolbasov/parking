@@ -2,6 +2,7 @@ package com.swedbank.parking.parking.config
 
 import com.sun.istack.NotNull
 import com.swedbank.parking.common.config.Prefix
+import com.swedbank.parking.parking.model.PricingStrategy
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.validation.annotation.Validated
@@ -45,6 +46,13 @@ data class ParkingProperties(
         data class Price(
             @field:[NotNull Min(0)]
             val avg: BigDecimal? = null,
-        )
+            @Validated
+            val strategy: Strategy,
+        ) {
+            data class Strategy(
+                @field:NotNull
+                val default: PricingStrategy? = null,
+            )
+        }
     }
 }

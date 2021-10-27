@@ -3,7 +3,7 @@ package com.swedbank.parking.parking.service
 import com.swedbank.parking.common.exception.ParkingException
 import com.swedbank.parking.common.exception.ValidationError
 import com.swedbank.parking.parking.dto.ApiPricingStrategy
-import com.swedbank.parking.parking.dto.ParkingTicketCreateRequest
+import com.swedbank.parking.parking.dto.ParkingTicketAssignRequest
 import com.swedbank.parking.parking.dto.ParkingTicketDto
 import com.swedbank.parking.parking.exception.PricingError
 import com.swedbank.parking.parking.mapper.ParkingTicketMapper
@@ -28,7 +28,7 @@ class ParkingTicketRestService(
     @Transactional
     fun assign(
         parkingUid: UUID,
-        request: ParkingTicketCreateRequest,
+        request: ParkingTicketAssignRequest,
         strategy: ApiPricingStrategy,
     ): ParkingTicketDto {
         val parking = parkingService.getByUidFetchingFloorsAndLotsLockedNN(parkingUid)
@@ -43,10 +43,10 @@ class ParkingTicketRestService(
                 validationErrors = listOf(
                     ValidationError(
                         field = "strategy",
-                        message = "not found",
+                        message = "service not found",
                     )
                 ),
-                message = "Pricing strategy $strategy not found.",
+                message = "Service for pricing strategy $strategy not found.",
             )
         // todo push event with price
         return parkingTicketMapper.getTicketDto(

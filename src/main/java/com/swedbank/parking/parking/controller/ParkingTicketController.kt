@@ -1,7 +1,8 @@
 package com.swedbank.parking.parking.controller
 
+import com.swedbank.parking.parking.config.ParkingProperties
 import com.swedbank.parking.parking.dto.ApiPricingStrategy
-import com.swedbank.parking.parking.dto.ParkingTicketCreateRequest
+import com.swedbank.parking.parking.dto.ParkingTicketAssignRequest
 import com.swedbank.parking.parking.dto.ParkingTicketDto
 import com.swedbank.parking.parking.service.ParkingTicketRestService
 import org.springframework.validation.annotation.Validated
@@ -19,22 +20,18 @@ import javax.validation.Valid
 @Validated
 class ParkingTicketController(
     private val parkingTicketRestService: ParkingTicketRestService,
+    private val parkingProperties: ParkingProperties,
 ) {
     @PostMapping(path = ["/{parkingUid}"])
     fun assign(
         @PathVariable parkingUid: UUID,
         @RequestParam(required = false) strategy: ApiPricingStrategy?,
-        @[RequestBody Valid] request: ParkingTicketCreateRequest,
+        @[RequestBody Valid] request: ParkingTicketAssignRequest,
     ): ParkingTicketDto {
         return parkingTicketRestService.assign(
             parkingUid = parkingUid,
             request = request,
-            strategy = strategy ?: defaultPricingStrategy,
+            strategy = strategy ?: parkingProperties.ticket.price.strategy.default!!.toApi(),
         )
-    }
-
-    companion object {
-        // todo move to properties
-        private val defaultPricingStrategy = ApiPricingStrategy.FLOOR_OCCUPANCY
     }
 }

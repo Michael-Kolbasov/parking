@@ -9,6 +9,8 @@ parking:
   ticket:
     price:
       avg: 100.0
+      strategy:
+        default: ${DEFAULT_PRICING_STRATEGY:FLOOR_OCCUPANCY}
 
 spring:
   datasource:

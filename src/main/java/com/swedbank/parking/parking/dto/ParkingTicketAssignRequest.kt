@@ -7,7 +7,7 @@ import javax.validation.Valid
 import javax.validation.constraints.Min
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ParkingTicketCreateRequest(
+data class ParkingTicketAssignRequest(
     @field:[NotNull Valid]
     val vehicle: Vehicle? = null,
 ) {

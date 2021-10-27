@@ -10,7 +10,7 @@ class ParkingTicketService(
     private val parkingTicketRepository: ParkingTicketRepository,
 ) {
     @Transactional
-    fun create(ticket: ParkingTicket): ParkingTicket {
+    fun saveOrUpdate(ticket: ParkingTicket): ParkingTicket {
         return parkingTicketRepository.saveAndFlush(ticket)
     }
 }
