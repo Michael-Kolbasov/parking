@@ -14,6 +14,8 @@ import javax.validation.constraints.Min
 data class ParkingProperties(
     @Validated
     val floor: Floor,
+    @Validated
+    val ticket: Ticket,
 ) {
     data class Floor(
         @Validated
@@ -33,6 +35,16 @@ data class ParkingProperties(
             val min: BigDecimal? = null,
             @field:[NotNull Min(0)]
             val max: BigDecimal? = null,
+        )
+    }
+
+    data class Ticket(
+        @Validated
+        val price: Price,
+    ) {
+        data class Price(
+            @field:[NotNull Min(0)]
+            val avg: BigDecimal? = null,
         )
     }
 }

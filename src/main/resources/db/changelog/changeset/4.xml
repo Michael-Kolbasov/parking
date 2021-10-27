@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="4" author="m.kolbasov">
+        <addColumn tableName="parking_lot">
+            <column name="pl_occupied" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <createTable tableName="parking_ticket">
+            <column name="pt_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="pt_uid" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="pt_price" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pt_created" type="datetime" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pt_paid" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pt_paid_at" type="datetime"/>
+            <column name="pt_valid_from" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pt_valid_till" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pl_id" type="bigint">
+                <constraints nullable="false" references="parking_lot(pl_id)" foreignKeyName="parking_ticket_pl_id_fk"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="parking_ticket" indexName="parking_ticket_uid_i">
+            <column name="pt_uid"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

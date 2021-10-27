@@ -1,10 +1,10 @@
 package com.swedbank.parking.parking.model
 
+import java.math.BigDecimal
 import java.time.Instant
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
@@ -13,35 +13,41 @@ import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "parking_lot")
-class ParkingLot(
+@Table(name = "parking_ticket")
+class ParkingTicket(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pl_id")
+    @Column(name = "pt_id")
     var id: Long? = null,
 
-    @Column(name = "pl_uid")
+    @Column(name = "pt_uid")
     var uid: UUID = UUID.randomUUID(),
 
-    @Column(name = "pl_name")
-    var name: String,
+    @Column(name = "pt_price")
+    var price: BigDecimal,
 
-    @Column(name = "pl_occupied")
-    var occupied: Boolean = false,
-
-    @Column(name = "pl_created")
+    @Column(name = "pt_created")
     var created: Instant = Instant.now(),
 
-    @Column(name = "pl_updated")
-    var updated: Instant = Instant.now(),
+    @Column(name = "pt_paid")
+    var paid: Boolean = false,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pf_id")
-    var floor: ParkingFloor,
+    @Column(name = "pt_paid_at")
+    var paidAt: Instant? = null,
+
+    @Column(name = "pt_valid_from")
+    var validFrom: Instant,
+
+    @Column(name = "pt_valid_till")
+    var validTill: Instant,
+
+    @ManyToOne
+    @JoinColumn(name = "pl_id")
+    var lot: ParkingLot,
 ) {
     override fun equals(other: Any?): Boolean {
         if (other == null) return false
-        if (other !is ParkingLot) return false
+        if (other !is ParkingTicket) return false
         return if (id != null && other.id != null) {
             id == other.id
         } else {
@@ -54,14 +60,16 @@ class ParkingLot(
     }
 
     override fun toString(): String {
-        return "ParkingFloor{" +
+        return "ParkingTicket{" +
                 "id=$id, " +
                 "uid=$uid, " +
-                "name=$name, " +
-                "occupied=$occupied, " +
+                "price=$price, " +
                 "created=$created, " +
-                "updated=$updated, " +
-                "floorId=${floor.id}" +
+                "paid=$paid, " +
+                "paidAt=$paidAt, " +
+                "validFrom=$validFrom, " +
+                "validTill=$validTill, " +
+                "lotId=${lot.id}" +
                 "}"
     }
 }

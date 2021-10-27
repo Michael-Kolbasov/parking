@@ -6,6 +6,9 @@ parking:
     weight:
       min: 100.0
       max: 500.0
+  ticket:
+    price:
+      avg: 100.0
 
 spring:
   datasource:
