@@ -21,9 +21,5 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
-        <createIndex tableName="parking" indexName="parking_uid_i">
-            <column name="p_uid"/>
-        </createIndex>
     </changeSet>
 </databaseChangeLog>

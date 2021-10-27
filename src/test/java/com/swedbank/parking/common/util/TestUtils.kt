@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.TestComponent
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
-import java.time.Duration
-import java.time.Instant
 import java.util.UUID
 import kotlin.math.roundToLong
 
@@ -141,19 +139,7 @@ class TestUtils {
 
     fun getRandomParkingTicket(
         customizer: (ParkingTicket) -> Unit,
-    ): ParkingTicket {
-        val now = Instant.now()
-        return ParkingTicket(
-            price = BigDecimal.valueOf(
-                RandomUtils.nextDouble(
-                    (parkingProperties.ticket.price.avg!! - 100.0).toDouble()
-                        .coerceAtLeast(0.0),
-                    (parkingProperties.ticket.price.avg!! + 100.0).toDouble(),
-                ).roundToLong(),
-            ),
-            validFrom = now,
-            validTill = now.plus(Duration.ofMinutes(5)),
-            lot = getRandomParkingLot(),
-        )
-    }
+    ) = ParkingTicket(
+        lot = getRandomParkingLot(),
+    ).also(customizer)
 }

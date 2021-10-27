@@ -10,6 +10,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
+import javax.persistence.OneToOne
 import javax.persistence.Table
 
 @Entity
@@ -26,9 +27,6 @@ class ParkingLot(
     @Column(name = "pl_name")
     var name: String,
 
-    @Column(name = "pl_occupied")
-    var occupied: Boolean = false,
-
     @Column(name = "pl_created")
     var created: Instant = Instant.now(),
 
@@ -38,6 +36,10 @@ class ParkingLot(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pf_id")
     var floor: ParkingFloor,
+
+    @OneToOne
+    @JoinColumn(name = "pl_occupied_by_v_id")
+    var occupiedBy: Vehicle? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         if (other == null) return false
@@ -54,14 +56,14 @@ class ParkingLot(
     }
 
     override fun toString(): String {
-        return "ParkingFloor{" +
+        return "ParkingLot{" +
                 "id=$id, " +
                 "uid=$uid, " +
                 "name=$name, " +
-                "occupied=$occupied, " +
                 "created=$created, " +
                 "updated=$updated, " +
-                "floorId=${floor.id}" +
+                "floorId=${floor.id}, " +
+                "occupiedById=${occupiedBy?.id} " +
                 "}"
     }
 }

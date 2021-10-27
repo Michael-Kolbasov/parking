@@ -24,7 +24,7 @@ class ParkingTicket(
     var uid: UUID = UUID.randomUUID(),
 
     @Column(name = "pt_price")
-    var price: BigDecimal,
+    var price: BigDecimal? = null,
 
     @Column(name = "pt_created")
     var created: Instant = Instant.now(),
@@ -34,12 +34,6 @@ class ParkingTicket(
 
     @Column(name = "pt_paid_at")
     var paidAt: Instant? = null,
-
-    @Column(name = "pt_valid_from")
-    var validFrom: Instant,
-
-    @Column(name = "pt_valid_till")
-    var validTill: Instant,
 
     @ManyToOne
     @JoinColumn(name = "pl_id")
@@ -67,8 +61,6 @@ class ParkingTicket(
                 "created=$created, " +
                 "paid=$paid, " +
                 "paidAt=$paidAt, " +
-                "validFrom=$validFrom, " +
-                "validTill=$validTill, " +
                 "lotId=${lot.id}" +
                 "}"
     }

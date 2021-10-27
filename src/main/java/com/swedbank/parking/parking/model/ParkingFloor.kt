@@ -3,6 +3,7 @@ package com.swedbank.parking.parking.model
 import java.math.BigDecimal
 import java.time.Instant
 import java.util.UUID
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
@@ -42,6 +44,9 @@ class ParkingFloor(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "p_id")
     var parking: Parking,
+
+    @OneToMany(mappedBy = "floor", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    var lots: MutableSet<ParkingLot> = mutableSetOf(),
 ) {
     override fun equals(other: Any?): Boolean {
         if (other == null) return false

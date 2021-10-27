@@ -25,9 +25,6 @@
             </column>
         </createTable>
 
-        <createIndex tableName="parking_lot" indexName="parking_lot_uid_i">
-            <column name="pl_uid"/>
-        </createIndex>
         <createIndex tableName="parking_lot" indexName="parking_lot_pf_id_i">
             <column name="pf_id"/>
         </createIndex>

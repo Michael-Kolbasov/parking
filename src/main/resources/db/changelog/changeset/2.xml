@@ -31,9 +31,6 @@
             </column>
         </createTable>
 
-        <createIndex tableName="parking_floor" indexName="parking_floor_uid_i">
-            <column name="pf_uid"/>
-        </createIndex>
         <createIndex tableName="parking_floor" indexName="parking_floor_p_id_i">
             <column name="p_id"/>
         </createIndex>
