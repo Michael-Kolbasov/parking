@@ -9,6 +9,8 @@ enum class ParkingError(
 ) : ParkingErrorInfo {
     INTERNAL_ERROR("internal", HttpStatus.INTERNAL_SERVER_ERROR),
     NOT_FOUND("not.found", HttpStatus.NOT_FOUND),
+    VALIDATION_EXCEPTION("validation", HttpStatus.BAD_REQUEST),
+    METHOD_NOT_SUPPORTED("method.not.supported", HttpStatus.METHOD_NOT_ALLOWED)
     ;
 
     override fun getCode() = "${Prefix.error}.$code"

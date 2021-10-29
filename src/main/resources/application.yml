@@ -33,6 +33,7 @@ spring:
       hibernate.default_schema: ${DATABASE_SCHEMA:public}
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
+    drop-first: true
 
 server:
   port: ${PORT:8080}

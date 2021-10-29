@@ -1,10 +1,10 @@
 package com.swedbank.parking.parking.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.sun.istack.NotNull
 import java.math.BigDecimal
 import javax.validation.Valid
 import javax.validation.constraints.Min
+import javax.validation.constraints.NotNull
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ParkingTicketAssignRequest(

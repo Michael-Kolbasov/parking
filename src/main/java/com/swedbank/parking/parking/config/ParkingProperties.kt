@@ -1,6 +1,5 @@
 package com.swedbank.parking.parking.config
 
-import com.sun.istack.NotNull
 import com.swedbank.parking.common.config.Prefix
 import com.swedbank.parking.parking.model.PricingStrategy
 import org.springframework.boot.context.properties.ConfigurationProperties
@@ -8,6 +7,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.validation.annotation.Validated
 import java.math.BigDecimal
 import javax.validation.constraints.Min
+import javax.validation.constraints.NotNull
 
 @ConfigurationProperties(prefix = Prefix.parking)
 @ConstructorBinding

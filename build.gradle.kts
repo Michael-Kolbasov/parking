@@ -4,9 +4,9 @@ plugins {
     java
     kotlin("jvm") version "1.5.31"
     kotlin("plugin.jpa") version "1.5.31"
+    kotlin("plugin.spring") version "1.5.31"
     id("org.springframework.boot") version "2.5.6"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("plugin.spring") version "1.5.31"
     id("org.liquibase.gradle") version "2.0.4"
 }
 
@@ -51,6 +51,8 @@ tasks.getByName<Test>("test") {
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
         jvmTarget = "15"
+        freeCompilerArgs = freeCompilerArgs + "-Xemit-jvm-type-annotations"
+        freeCompilerArgs = freeCompilerArgs + "-Xjsr305=strict"
     }
 }
 
