@@ -1,8 +1,9 @@
 ### How to launch:
-1. Docker-compose in the root where API app is bind to port 8080 and database to port 5432
-   1. Command: todo
-2. Alternatively, you may build your own image via Dockerfile and connect to your chosen database
-   1. Command: todo
+1. Docker-compose with backend app bind to host port 8080 and database to host port 5432
+   1. `docker-compose up`
+2. Alternatively, you may build and run your own image via Dockerfile
+   1. `docker build -t parking_backend . && docker run -it --rm parking_backend`
+   2. Note: this requires an existing database to be launched and available for the container from network point of view.
 3. Or launch directly from the sources, again, with your own chosen database:
    1. `./gradlew bootRun`
 
@@ -12,9 +13,14 @@ There is a prepared parking with uid `0c76420d-3e17-48c6-ac50-cf89b64d1e31` with
 (height: 3.0, weight_capacity: 250), 
 (height: 5.0, weight_capacity: 500), 
 two free parking lots each.
+See parking ticket pricing description below.
 
 ### Important environment variables to override the default settings:
-todo
+JDBC_USER - username for connection, default: "postgres"
+JDBC_PASSWORD - password for connection, default: "password"
+JDBC_URL - jdbc url string for connection, default: "jdbc:postgresql://localhost:5432/parking"
+DEFAULT_PRICING_STRATEGY - default pricing strategy name, default: "default"
+PORT - backend app http port, default: 8080
 
 ### Swagger:
 todo
