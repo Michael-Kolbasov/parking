@@ -5,10 +5,12 @@ import com.swedbank.parking.parking.dao.ParkingFloorRepository
 import com.swedbank.parking.parking.dao.ParkingLotRepository
 import com.swedbank.parking.parking.dao.ParkingRepository
 import com.swedbank.parking.parking.dao.ParkingTicketRepository
+import com.swedbank.parking.parking.dao.VehicleRepository
 import com.swedbank.parking.parking.model.Parking
 import com.swedbank.parking.parking.model.ParkingFloor
 import com.swedbank.parking.parking.model.ParkingLot
 import com.swedbank.parking.parking.model.ParkingTicket
+import com.swedbank.parking.parking.model.Vehicle
 import org.apache.commons.lang3.RandomUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.TestComponent
@@ -29,29 +31,20 @@ class TestUtils {
     private lateinit var parkingLotRepository: ParkingLotRepository
     @Autowired
     private lateinit var parkingTicketRepository: ParkingTicketRepository
-
-    @Transactional
-    fun createRandomParking(): Parking = createRandomParking(
-        customizer = {},
-    )
+    @Autowired
+    private lateinit var vehicleRepository: VehicleRepository
 
     @Transactional
     fun createRandomParking(
-        customizer: (Parking) -> Unit,
+        customizer: (Parking) -> Unit = {},
     ): Parking = parkingRepository.saveAndFlush(
         getRandomParking(customizer)
     )
 
     @Transactional
-    fun createRandomParkingFloor(): ParkingFloor = createRandomParkingFloor(
-        customizer = {},
-        parkingCustomizer = {},
-    )
-
-    @Transactional
     fun createRandomParkingFloor(
-        customizer: (ParkingFloor) -> Unit,
-        parkingCustomizer: (Parking) -> Unit,
+        customizer: (ParkingFloor) -> Unit = {},
+        parkingCustomizer: (Parking) -> Unit = {},
     ): ParkingFloor {
         val floor = getRandomParkingFloor(customizer, parkingCustomizer)
         parkingRepository.saveAndFlush(floor.parking)
@@ -59,17 +52,10 @@ class TestUtils {
     }
 
     @Transactional
-    fun createRandomParkingLot(): ParkingLot = createRandomParkingLot(
-        customizer = {},
-        parkingFloorCustomizer = {},
-        parkingCustomizer = {},
-    )
-
-    @Transactional
     fun createRandomParkingLot(
-        customizer: (ParkingLot) -> Unit,
-        parkingFloorCustomizer: (ParkingFloor) -> Unit,
-        parkingCustomizer: (Parking) -> Unit,
+        customizer: (ParkingLot) -> Unit = {},
+        parkingFloorCustomizer: (ParkingFloor) -> Unit = {},
+        parkingCustomizer: (Parking) -> Unit = {},
     ): ParkingLot {
         val lot = getRandomParkingLot(customizer, parkingFloorCustomizer, parkingCustomizer)
         parkingRepository.saveAndFlush(lot.floor.parking)
@@ -78,13 +64,8 @@ class TestUtils {
     }
 
     @Transactional
-    fun createRandomParkingTicket(): ParkingTicket = createRandomParkingTicket(
-        customizer = {},
-    )
-
-    @Transactional
     fun createRandomParkingTicket(
-        customizer: (ParkingTicket) -> Unit,
+        customizer: (ParkingTicket) -> Unit = {},
     ): ParkingTicket {
         val ticket = getRandomParkingTicket(customizer)
         parkingRepository.saveAndFlush(ticket.lot.floor.parking)
@@ -93,42 +74,43 @@ class TestUtils {
         return parkingTicketRepository.saveAndFlush(ticket)
     }
 
+    @Transactional
+    fun createRandomVehicle(
+        customizer: (Vehicle) -> Unit = {},
+    ): Vehicle = vehicleRepository.saveAndFlush(
+        getRandomVehicle(customizer)
+    )
+
     fun getRandomParking(
-        customizer: (Parking) -> Unit,
+        customizer: (Parking) -> Unit = {},
     ) = Parking(
         name = UUID.randomUUID().toString(),
     ).also(customizer)
 
     fun getRandomParkingFloor(
-        customizer: (ParkingFloor) -> Unit,
-        parkingCustomizer: (Parking) -> Unit,
+        customizer: (ParkingFloor) -> Unit = {},
+        parkingCustomizer: (Parking) -> Unit = {},
     ) = ParkingFloor(
         name = UUID.randomUUID().toString(),
-        height = BigDecimal.valueOf(
-            RandomUtils.nextDouble(
-                parkingProperties.floor.height.min!!.toDouble(),
-                parkingProperties.floor.height.max!!.toDouble(),
-            ).roundToLong(),
-        ),
-        weightCapacity = BigDecimal.valueOf(
-            RandomUtils.nextDouble(
-                parkingProperties.floor.weight.min!!.toDouble(),
-                parkingProperties.floor.weight.max!!.toDouble(),
-            ).roundToLong(),
-        ),
+        height = with(parkingProperties.floor.weight) {
+            getRandomBigDecimal(
+                min = min!!.toDouble(),
+                max = max!!.toDouble(),
+            )
+        },
+        weightCapacity = with(parkingProperties.floor.weight) {
+            getRandomBigDecimal(
+                min = min!!.toDouble(),
+                max = max!!.toDouble(),
+            )
+        },
         parking = getRandomParking(parkingCustomizer)
     ).also(customizer)
 
-    fun getRandomParkingLot() = getRandomParkingLot(
-        customizer = {},
-        parkingFloorCustomizer = {},
-        parkingCustomizer = {},
-    )
-
     fun getRandomParkingLot(
-        customizer: (ParkingLot) -> Unit,
-        parkingFloorCustomizer: (ParkingFloor) -> Unit,
-        parkingCustomizer: (Parking) -> Unit,
+        customizer: (ParkingLot) -> Unit = {},
+        parkingFloorCustomizer: (ParkingFloor) -> Unit = {},
+        parkingCustomizer: (Parking) -> Unit = {},
     ) = ParkingLot(
         name = UUID.randomUUID().toString(),
         floor = getRandomParkingFloor(
@@ -138,8 +120,28 @@ class TestUtils {
     ).also(customizer)
 
     fun getRandomParkingTicket(
-        customizer: (ParkingTicket) -> Unit,
+        customizer: (ParkingTicket) -> Unit = {},
     ) = ParkingTicket(
         lot = getRandomParkingLot(),
     ).also(customizer)
+
+    fun getRandomVehicle(
+        customizer: (Vehicle) -> Unit = {},
+    ) = Vehicle(
+        weight = getRandomBigDecimal(
+            min = 50.0,
+            max = 100.0
+        ),
+        height = getRandomBigDecimal(
+            min = 50.0,
+            max = 100.0
+        ),
+    )
+
+    fun getRandomBigDecimal(
+        min: Double = Double.MIN_VALUE,
+        max: Double = Double.MAX_VALUE,
+    ): BigDecimal = BigDecimal.valueOf(
+        RandomUtils.nextDouble(min, max).roundToLong(),
+    )
 }
