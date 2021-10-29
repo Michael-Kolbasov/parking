@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="5" author="m.kolbasov">
+        <insert tableName="parking">
+            <column name="p_id" value="-1"/>
+            <column name="p_uid" value="0c76420d-3e17-48c6-ac50-cf89b64d1e31"/>
+            <column name="p_name" value="Grand Infinite Parking"/>
+        </insert>
+
+        <insert tableName="parking_floor">
+            <column name="pf_id" value="-1"/>
+            <column name="pf_uid" value="0c76420d-3e17-48c6-ac50-cf89b64d1e32"/>
+            <column name="pf_name" value="A"/>
+            <column name="pf_height" value="3.0"/>
+            <column name="pf_weight_capacity" value="250"/>
+            <column name="p_id" value="-1"/>
+        </insert>
+        <insert tableName="parking_floor">
+            <column name="pf_id" value="-2"/>
+            <column name="pf_uid" value="0c76420d-3e17-48c6-ac50-cf89b64d1e33"/>
+            <column name="pf_name" value="B"/>
+            <column name="pf_height" value="5.0"/>
+            <column name="pf_weight_capacity" value="500"/>
+            <column name="p_id" value="-1"/>
+        </insert>
+
+        <insert tableName="parking_lot">
+            <column name="pl_id" value="-1"/>
+            <column name="pl_uid" value="0c76420d-3e17-48c6-ac50-cf89b64d1e34"/>
+            <column name="pl_name" value="A1"/>
+            <column name="pf_id" value="-1"/>
+        </insert>
+        <insert tableName="parking_lot">
+            <column name="pl_id" value="-2"/>
+            <column name="pl_uid" value="0c76420d-3e17-48c6-ac50-cf89b64d1e35"/>
+            <column name="pl_name" value="A2"/>
+            <column name="pf_id" value="-1"/>
+        </insert>
+        <insert tableName="parking_lot">
+            <column name="pl_id" value="-3"/>
+            <column name="pl_uid" value="0c76420d-3e17-48c6-ac50-cf89b64d1e36"/>
+            <column name="pl_name" value="B1"/>
+            <column name="pf_id" value="-2"/>
+        </insert>
+        <insert tableName="parking_lot">
+            <column name="pl_id" value="-4"/>
+            <column name="pl_uid" value="0c76420d-3e17-48c6-ac50-cf89b64d1e37"/>
+            <column name="pl_name" value="B2"/>
+            <column name="pf_id" value="-2"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

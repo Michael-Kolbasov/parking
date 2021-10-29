@@ -3,10 +3,15 @@ package com.swedbank.parking.parking.dto
 import java.time.LocalDateTime
 import java.util.UUID
 
-data class ParkingDto(
+data class ParkingLotDto(
     val uid: UUID,
     val name: String,
     val created: LocalDateTime,
     val updated: LocalDateTime,
-    val floors: List<ParkingFloorDto> = listOf(),
-)
+    val occupied: Boolean,
+    val floor: ParkingFloorDto,
+) {
+    data class ParkingFloorDto(
+        val uid: UUID,
+    )
+}

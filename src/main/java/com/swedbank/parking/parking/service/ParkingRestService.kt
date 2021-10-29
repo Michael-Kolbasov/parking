@@ -14,7 +14,8 @@ class ParkingRestService(
     @Transactional(readOnly = true)
     fun getByUid(uid: UUID): ParkingDto {
         return parkingMapper.getParkingDto(
-            parkingService.getByUidNN(uid)
+            parking = parkingService.getByUidFetchingFloorsAndLotsNN(uid),
+            withFloors = true,
         )
     }
 }

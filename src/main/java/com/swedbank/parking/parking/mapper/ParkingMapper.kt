@@ -7,13 +7,24 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 @Component
-class ParkingMapper {
-    fun getParkingDto(parking: Parking) = with(parking) {
+class ParkingMapper(
+    private val parkingFloorMapper: ParkingFloorMapper,
+) {
+    fun getParkingDto(
+        parking: Parking,
+        withFloors: Boolean = false,
+    ) = with(parking) {
         ParkingDto(
             uid = uid,
             name = name,
             created = LocalDateTime.ofInstant(created, ZoneOffset.UTC),
             updated = LocalDateTime.ofInstant(updated, ZoneOffset.UTC),
+            floors = if (withFloors) floors.map {
+                parkingFloorMapper.getParkingFloorDto(
+                    floor = it,
+                    withLots = true,
+                )
+            } else listOf(),
         )
     }
 }

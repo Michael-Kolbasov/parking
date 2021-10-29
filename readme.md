@@ -4,11 +4,16 @@
 2. Alternatively, you may build your own image via Dockerfile and connect to your chosen database
    1. Command: todo
 3. Or launch directly from the sources, again, with your own chosen database:
-   1. `gradlew todo`
+   1. `./gradlew bootRun`
 
-*Database is managed with liquibase, therefore in case of options 2 or 3, you just have to override the default connection properties with variables described below. 
+Database is managed with liquibase, therefore in case of options 2 or 3, you just have to override the default connection properties with variables described below.
 
-### Important environment variables to override the default:
+There is a prepared parking with uid `0c76420d-3e17-48c6-ac50-cf89b64d1e31` with two floors: 
+(height: 3.0, weight_capacity: 250), 
+(height: 5.0, weight_capacity: 500), 
+two free parking lots each.
+
+### Important environment variables to override the default settings:
 todo
 
 ### Swagger:
