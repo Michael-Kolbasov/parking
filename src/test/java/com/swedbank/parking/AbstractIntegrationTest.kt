@@ -1,5 +1,6 @@
 package com.swedbank.parking
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.swedbank.parking.common.config.IntegrationTestConfig
 import com.swedbank.parking.common.util.TestUtils
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,4 +23,6 @@ abstract class AbstractIntegrationTest {
     lateinit var mockMvc: MockMvc
     @Autowired
     lateinit var testUtils: TestUtils
+    @Autowired
+    lateinit var objectMapper: ObjectMapper
 }

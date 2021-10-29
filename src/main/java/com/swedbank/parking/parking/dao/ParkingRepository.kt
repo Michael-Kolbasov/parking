@@ -13,11 +13,15 @@ import javax.persistence.LockModeType
 interface ParkingRepository : JpaRepository<Parking, Long> {
     fun findByUid(uid: UUID): Parking?
 
+    @Query("select p from Parking p " +
+            "where p.uid = :uid")
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    fun findByUidLocked(uid: UUID): Parking?
+
     @Query("select distinct p from Parking p " +
             "left join fetch p.floors pf " +
             "left join fetch pf.lots pfl " +
             "left join fetch pfl.occupiedBy pflv " +
             "where p.uid = :uid")
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    fun findByUidFetchingAllLocked(uid: UUID): Parking?
+    fun findByUidFetchingAll(uid: UUID): Parking?
 }

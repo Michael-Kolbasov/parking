@@ -31,7 +31,9 @@ class ParkingTicketRestService(
         request: ParkingTicketAssignRequest,
         strategy: ApiPricingStrategy,
     ): ParkingTicketDto {
-        val parking = parkingService.getByUidFetchingFloorsAndLotsLockedNN(parkingUid)
+        // intentional call to lock the parking row so that concurrent calls would not end up interfering each other
+        parkingService.getByUidLockedNN(parkingUid)
+        val parking = parkingService.getByUidFetchingFloorsAndLotsNN(parkingUid)
         val assignedTicket = parkingTicketAssignService.assign(
             parking = parking,
             vehicle = vehicleMapper.getVehicle(request.vehicle!!),

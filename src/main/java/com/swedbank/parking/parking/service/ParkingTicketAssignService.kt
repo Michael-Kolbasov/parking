@@ -16,6 +16,7 @@ class ParkingTicketAssignService(
     private val parkingTicketService: ParkingTicketService,
     private val parkingTicketMapper: ParkingTicketMapper,
     private val parkingLotService: ParkingLotService,
+    private val vehicleService: VehicleService,
 ) {
     @Transactional
     fun assign(
@@ -29,6 +30,7 @@ class ParkingTicketAssignService(
                 message = "Parking ${parking.uid} has no available parking lots.",
             )
         }
+        vehicleService.saveOrUpdate(vehicle)
         // todo add strategy with specific rules to pick a lot, picking any for now
         val pickedLot = availableLots.first()
             .apply {

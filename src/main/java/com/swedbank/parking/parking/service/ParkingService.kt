@@ -23,8 +23,14 @@ class ParkingService(
     }
 
     @Transactional(readOnly = true)
-    fun getByUidFetchingFloorsAndLotsLockedNN(uid: UUID): Parking {
-        return parkingRepository.findByUidFetchingAllLocked(uid)
+    fun getByUidLockedNN(uid: UUID): Parking {
+        return parkingRepository.findByUidFetchingAll(uid)
+            ?: throw NotFoundException("Not found parking by uid $uid")
+    }
+
+    @Transactional(readOnly = true)
+    fun getByUidFetchingFloorsAndLotsNN(uid: UUID): Parking {
+        return parkingRepository.findByUidFetchingAll(uid)
             ?: throw NotFoundException("Not found parking by uid $uid")
     }
 }

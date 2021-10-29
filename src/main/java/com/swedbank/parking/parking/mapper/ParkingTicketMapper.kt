@@ -23,7 +23,7 @@ class ParkingTicketMapper {
             pricingStrategy = pricingStrategy.toApi(),
             created = LocalDateTime.ofInstant(Instant.now(), ParkingApplication.utc),
             paid = paid,
-            paidAt = LocalDateTime.ofInstant(paidAt, ParkingApplication.utc),
+            paidAt = paidAt?.let { LocalDateTime.ofInstant(paidAt, ParkingApplication.utc) },
             lot = with(lot) {
                 ParkingTicketDto.ParkingLotDto(
                     uid = uid,
