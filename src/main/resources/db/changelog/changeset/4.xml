@@ -25,6 +25,24 @@
             </column>
         </addColumn>
 
+        <createTable tableName="pricing_strategy">
+            <column name="ps_id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="ps_name" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="pricing_strategy">
+            <column name="ps_id" value="1"/>
+            <column name="ps_name" value="default"/>
+        </insert>
+        <insert tableName="pricing_strategy">
+            <column name="ps_id" value="2"/>
+            <column name="ps_name" value="floor_occupancy"/>
+        </insert>
+
         <createTable tableName="parking_ticket">
             <column name="pt_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -33,6 +51,9 @@
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="pt_price" type="numeric"/>
+            <column name="ps_id" type="bigint">
+                <constraints references="pricing_strategy(ps_id)" foreignKeyName="parking_ticket_ps_id_fk"/>
+            </column>
             <column name="pt_created" type="datetime" defaultValueComputed="now()">
                 <constraints nullable="false"/>
             </column>

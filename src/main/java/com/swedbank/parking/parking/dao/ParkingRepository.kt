@@ -24,4 +24,10 @@ interface ParkingRepository : JpaRepository<Parking, Long> {
             "left join fetch pfl.occupiedBy pflv " +
             "where p.uid = :uid")
     fun findByUidFetchingAll(uid: UUID): Parking?
+
+    @Query("select distinct p from Parking p " +
+            "left join fetch p.floors pf " +
+            "left join fetch pf.lots pfl " +
+            "left join fetch pfl.occupiedBy pflv")
+    fun getAllFetchingAll(): Set<Parking>
 }

@@ -33,4 +33,7 @@ class ParkingService(
         return parkingRepository.findByUidFetchingAll(uid)
             ?: throw NotFoundException("Not found parking by uid $uid")
     }
+
+    @Transactional(readOnly = true)
+    fun getAllFetchingAll(): Collection<Parking> = parkingRepository.getAllFetchingAll()
 }

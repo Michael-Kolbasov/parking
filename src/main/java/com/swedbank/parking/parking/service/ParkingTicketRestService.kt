@@ -16,6 +16,7 @@ import java.util.UUID
 @Service
 class ParkingTicketRestService(
     private val parkingService: ParkingService,
+    private val parkingTicketService: ParkingTicketService,
     private val parkingTicketAssignService: ParkingTicketAssignService,
     private val vehicleMapper: VehicleMapper,
     private val parkingTicketMapper: ParkingTicketMapper,
@@ -31,7 +32,6 @@ class ParkingTicketRestService(
         request: ParkingTicketAssignRequest,
         strategy: ApiPricingStrategy,
     ): ParkingTicketDto {
-        // intentional call to lock the parking row so that concurrent calls would not end up interfering each other
         parkingService.getByUidLockedNN(parkingUid)
         val parking = parkingService.getByUidFetchingFloorsAndLotsNN(parkingUid)
         val assignedTicket = parkingTicketAssignService.assign(
@@ -52,9 +52,23 @@ class ParkingTicketRestService(
             )
         // todo push event with price
         return parkingTicketMapper.getTicketDto(
-            ticket = assignedTicket,
-            pricePerMinute = price,
-            pricingStrategy = strategy.toModel(),
+            ticket = parkingTicketService.saveOrUpdate(
+                ticket = assignedTicket.apply {
+                    this.price = price
+                    this.pricingStrategy = strategy.toModel()
+                }
+            ),
         )
     }
+
+    @Transactional(readOnly = true)
+    fun getByUid(uid: UUID): ParkingTicketDto {
+        return parkingTicketMapper.getTicketDto(
+            ticket = parkingTicketService.getByUidNN(uid),
+        )
+    }
+
+    @Transactional(readOnly = true)
+    fun getAll() = parkingTicketService.getAllFetchingAll()
+        .map { parkingTicketMapper.getTicketDto(it) }
 }

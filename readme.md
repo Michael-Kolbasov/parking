@@ -23,7 +23,7 @@ DEFAULT_PRICING_STRATEGY - default pricing strategy name, default: "default"
 PORT - backend app http port, default: 8080
 
 ### Swagger:
-`/api/swagger-ui.html#`
+`/api/swagger-ui.html`
 
 ### Description:
 * Entities:

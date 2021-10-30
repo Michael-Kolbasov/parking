@@ -6,8 +6,8 @@ import java.util.UUID
 
 data class ParkingTicketDto(
     val uid: UUID,
-    val pricePerMinute: BigDecimal,
-    val pricingStrategy: ApiPricingStrategy,
+    val pricePerMinute: BigDecimal?,
+    val pricingStrategy: ApiPricingStrategy?,
     val created: LocalDateTime,
     val paid: Boolean,
     val paidAt: LocalDateTime? = null,

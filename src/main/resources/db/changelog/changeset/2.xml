@@ -34,5 +34,10 @@
         <createIndex tableName="parking_floor" indexName="parking_floor_p_id_i">
             <column name="p_id"/>
         </createIndex>
+
+        <createIndex tableName="parking_floor" indexName="parking_floor_p_id_pf_name_uq" unique="true">
+            <column name="p_id"/>
+            <column name="pf_name"/>
+        </createIndex>
     </changeSet>
 </databaseChangeLog>

@@ -6,6 +6,7 @@ import com.swedbank.parking.parking.dto.ParkingTicketAssignRequest
 import com.swedbank.parking.parking.dto.ParkingTicketDto
 import com.swedbank.parking.parking.service.ParkingTicketRestService
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -34,4 +35,12 @@ class ParkingTicketController(
             strategy = strategy ?: parkingProperties.ticket.price.strategy.default!!.toApi(),
         )
     }
+
+    @GetMapping(path = ["/{ticketUid}"])
+    fun getByUid(@PathVariable ticketUid: UUID): ParkingTicketDto {
+        return parkingTicketRestService.getByUid(ticketUid)
+    }
+
+    @GetMapping
+    fun getAll(): Collection<ParkingTicketDto> = parkingTicketRestService.getAll()
 }

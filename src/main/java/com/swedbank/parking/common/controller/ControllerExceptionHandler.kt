@@ -7,6 +7,7 @@ import com.swedbank.parking.common.exception.ValidationsExtractor
 import com.swedbank.parking.common.mapper.ValidationErrorMapper
 import com.swedbank.parking.common.model.LoggerCompanion
 import org.springframework.context.MessageSource
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.BindException
@@ -105,6 +106,17 @@ class ControllerExceptionHandler(
         return getResponseEntity(
             ParkingException(
                 errorInfo = ParkingError.METHOD_NOT_SUPPORTED,
+                message = ex.message,
+                cause = ex,
+            )
+        )
+    }
+
+    @ExceptionHandler
+    fun handle(ex: DataIntegrityViolationException): ResponseEntity<ExceptionResponse> {
+        return getResponseEntity(
+            ParkingException(
+                errorInfo = ParkingError.VALIDATION_EXCEPTION,
                 message = ex.message,
                 cause = ex,
             )

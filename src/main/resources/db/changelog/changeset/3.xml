@@ -28,5 +28,10 @@
         <createIndex tableName="parking_lot" indexName="parking_lot_pf_id_i">
             <column name="pf_id"/>
         </createIndex>
+
+        <createIndex tableName="parking_lot" indexName="parking_lot_pf_id_pl_name_uq" unique="true">
+            <column name="pf_id"/>
+            <column name="pl_name"/>
+        </createIndex>
     </changeSet>
 </databaseChangeLog>

@@ -35,6 +35,9 @@ class ParkingTicket(
     @Column(name = "pt_paid_at")
     var paidAt: Instant? = null,
 
+    @Column(name = "ps_id")
+    var pricingStrategy: PricingStrategy? = null,
+
     @ManyToOne
     @JoinColumn(name = "pl_id")
     var lot: ParkingLot,
@@ -61,6 +64,7 @@ class ParkingTicket(
                 "created=$created, " +
                 "paid=$paid, " +
                 "paidAt=$paidAt, " +
+                "pricingStrategyId=${pricingStrategy?.id}, " +
                 "lotId=${lot.id}" +
                 "}"
     }

@@ -1,6 +1,7 @@
 package com.swedbank.parking.parking.controller
 
 import com.swedbank.parking.AbstractIntegrationTest
+import com.swedbank.parking.common.util.TestUtils
 import com.swedbank.parking.parking.config.ParkingProperties
 import com.swedbank.parking.parking.dto.ApiPricingStrategy
 import com.swedbank.parking.parking.dto.ParkingTicketAssignRequest
@@ -23,11 +24,11 @@ class ParkingTicketControllerTest : AbstractIntegrationTest() {
         val lot = testUtils.createRandomParkingLot()
         val request = ParkingTicketAssignRequest(
             vehicle = ParkingTicketAssignRequest.Vehicle(
-                weight = testUtils.getRandomBigDecimal(
+                weight = TestUtils.getRandomBigDecimal(
                     min = 1.0,
                     max = lot.floor.weightCapacity.toDouble(),
                 ),
-                height = testUtils.getRandomBigDecimal(
+                height = TestUtils.getRandomBigDecimal(
                     min = 1.0,
                     max = lot.floor.height.toDouble(),
                 ),

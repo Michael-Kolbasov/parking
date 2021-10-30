@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class VehicleMapper {
-    fun getVehicle(vehicle: ParkingTicketAssignRequest.Vehicle) = with (vehicle) {
+    fun getVehicle(vehicle: ParkingTicketAssignRequest.Vehicle): Vehicle = with (vehicle) {
         Vehicle(
             weight = weight!!,
             height = height!!,

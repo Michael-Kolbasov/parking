@@ -20,6 +20,7 @@ repositories {
 val postgresqlDriverVersion by extra { "42.3.0" }
 val apacheCommonsVersion by extra { "3.12.0" }
 val swaggerVersion by extra { "2.9.2" }
+val mockkVersion by extra { "1.12.0" }
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
@@ -43,6 +44,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mockito:mockito-core")
+    testImplementation("io.mockk:mockk:$mockkVersion")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

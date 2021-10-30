@@ -47,6 +47,10 @@ class TestUtils {
         parkingCustomizer: (Parking) -> Unit = {},
     ): ParkingFloor {
         val floor = getRandomParkingFloor(customizer, parkingCustomizer)
+            .apply {
+                height = height.coerceIn(parkingProperties.floor.height.min!!, parkingProperties.floor.height.max!!)
+                weightCapacity = weightCapacity.coerceIn(parkingProperties.floor.weight.min!!, parkingProperties.floor.weight.max!!)
+            }
         parkingRepository.saveAndFlush(floor.parking)
         return parkingFloorRepository.saveAndFlush(floor)
     }
@@ -81,67 +85,69 @@ class TestUtils {
         getRandomVehicle(customizer)
     )
 
-    fun getRandomParking(
-        customizer: (Parking) -> Unit = {},
-    ) = Parking(
-        name = UUID.randomUUID().toString(),
-    ).also(customizer)
+    companion object {
+        fun getRandomParking(
+            customizer: (Parking) -> Unit = {},
+        ) = Parking(
+            name = UUID.randomUUID().toString(),
+        ).also(customizer)
 
-    fun getRandomParkingFloor(
-        customizer: (ParkingFloor) -> Unit = {},
-        parkingCustomizer: (Parking) -> Unit = {},
-    ) = ParkingFloor(
-        name = UUID.randomUUID().toString(),
-        height = with(parkingProperties.floor.weight) {
-            getRandomBigDecimal(
-                min = min!!.toDouble(),
-                max = max!!.toDouble(),
-            )
-        },
-        weightCapacity = with(parkingProperties.floor.weight) {
-            getRandomBigDecimal(
-                min = min!!.toDouble(),
-                max = max!!.toDouble(),
-            )
-        },
-        parking = getRandomParking(parkingCustomizer)
-    ).also(customizer)
+        fun getRandomParkingFloor(
+            customizer: (ParkingFloor) -> Unit = {},
+            parkingCustomizer: (Parking) -> Unit = {},
+        ): ParkingFloor {
+            val heightMin = RandomUtils.nextDouble()
+            val weightCapacityMin = RandomUtils.nextDouble()
+            return ParkingFloor(
+                name = UUID.randomUUID().toString(),
+                height = getRandomBigDecimal(
+                    min = heightMin,
+                    max = RandomUtils.nextDouble().coerceAtLeast(heightMin),
+                ),
+                weightCapacity = getRandomBigDecimal(
+                    min = weightCapacityMin,
+                    max = RandomUtils.nextDouble().coerceAtLeast(weightCapacityMin),
+                ),
+                parking = getRandomParking(parkingCustomizer)
+            ).also(customizer)
+        }
 
-    fun getRandomParkingLot(
-        customizer: (ParkingLot) -> Unit = {},
-        parkingFloorCustomizer: (ParkingFloor) -> Unit = {},
-        parkingCustomizer: (Parking) -> Unit = {},
-    ) = ParkingLot(
-        name = UUID.randomUUID().toString(),
-        floor = getRandomParkingFloor(
-            customizer = parkingFloorCustomizer,
-            parkingCustomizer = parkingCustomizer,
+        fun getRandomParkingLot(
+            customizer: (ParkingLot) -> Unit = {},
+            parkingFloorCustomizer: (ParkingFloor) -> Unit = {},
+            parkingCustomizer: (Parking) -> Unit = {},
+        ) = ParkingLot(
+            name = UUID.randomUUID().toString(),
+            floor = getRandomParkingFloor(
+                customizer = parkingFloorCustomizer,
+                parkingCustomizer = parkingCustomizer,
+            )
+        ).also(customizer)
+
+        fun getRandomParkingTicket(
+            customizer: (ParkingTicket) -> Unit = {},
+        ) = ParkingTicket(
+            lot = getRandomParkingLot(),
+        ).also(customizer)
+
+        fun getRandomVehicle(
+            customizer: (Vehicle) -> Unit = {},
+        ) = Vehicle(
+            weight = getRandomBigDecimal(
+                min = 50.0,
+                max = 100.0
+            ),
+            height = getRandomBigDecimal(
+                min = 50.0,
+                max = 100.0
+            ),
+        ).apply(customizer)
+
+        fun getRandomBigDecimal(
+            min: Double = Double.MIN_VALUE,
+            max: Double = Double.MAX_VALUE,
+        ): BigDecimal = BigDecimal.valueOf(
+            RandomUtils.nextDouble(min, max).roundToLong(),
         )
-    ).also(customizer)
-
-    fun getRandomParkingTicket(
-        customizer: (ParkingTicket) -> Unit = {},
-    ) = ParkingTicket(
-        lot = getRandomParkingLot(),
-    ).also(customizer)
-
-    fun getRandomVehicle(
-        customizer: (Vehicle) -> Unit = {},
-    ) = Vehicle(
-        weight = getRandomBigDecimal(
-            min = 50.0,
-            max = 100.0
-        ),
-        height = getRandomBigDecimal(
-            min = 50.0,
-            max = 100.0
-        ),
-    )
-
-    fun getRandomBigDecimal(
-        min: Double = Double.MIN_VALUE,
-        max: Double = Double.MAX_VALUE,
-    ): BigDecimal = BigDecimal.valueOf(
-        RandomUtils.nextDouble(min, max).roundToLong(),
-    )
+    }
 }
