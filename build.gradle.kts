@@ -19,6 +19,7 @@ repositories {
 
 val postgresqlDriverVersion by extra { "42.3.0" }
 val apacheCommonsVersion by extra { "3.12.0" }
+val swaggerVersion by extra { "2.9.2" }
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
@@ -26,6 +27,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("io.springfox:springfox-swagger2:$swaggerVersion")
+    implementation("io.springfox:springfox-swagger-ui:$swaggerVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")

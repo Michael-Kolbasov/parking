@@ -50,3 +50,10 @@ management:
   endpoint:
     health:
       show-details: always
+
+swagger:
+  api:
+    title: Parking
+    description:
+    version: 1.0.0
+    base-package: com.swedbank.parking
