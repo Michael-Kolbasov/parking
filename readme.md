@@ -16,11 +16,11 @@ two free parking lots each.
 See parking ticket pricing description below.
 
 ### Important environment variables to override the default settings:
-JDBC_USER - username for connection, default: "postgres"
-JDBC_PASSWORD - password for connection, default: "password"
-JDBC_URL - jdbc url string for connection, default: "jdbc:postgresql://localhost:5432/parking"
-DEFAULT_PRICING_STRATEGY - default pricing strategy name, default: "default"
-PORT - backend app http port, default: 8080
+* JDBC_USER - username for connection, default: "postgres"
+* JDBC_PASSWORD - password for connection, default: "password"
+* JDBC_URL - jdbc url string for connection, default: "jdbc:postgresql://localhost:5432/parking"
+* DEFAULT_PRICING_STRATEGY - default pricing strategy name, default: "default"
+* PORT - backend app http port, default: 8080
 
 ### Swagger:
 `/api/swagger-ui.html`
